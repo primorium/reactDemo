@@ -1,24 +1,22 @@
-import logo from './logo.svg';
+import { useState } from "react";
 import './App.css';
+import profiles from "./data";
+import ProfileList from "./ProfileList";
+import ProfileDetail from "./ProfileDetail.js";
 
 function App() {
+  const [selectedProfile, setSelectedProfile] = useState(null);
+
+  const profile = profiles.find((p) => p.id === selectedProfile);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      {selectedProfile === null ? (
+        <ProfileList profiles={profiles} onSelect={setSelectedProfile} />
+      ) : (
+        <ProfileDetail profile={profile} onBack={() => setSelectedProfile(null)} />
+      )}
+    </main>
   );
 }
 
